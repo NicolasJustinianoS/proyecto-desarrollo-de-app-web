@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nombre": "Corte de pelo", "descripcion": "Corte personalizado según estilo, ocasión y tipo de cabello.", "precio": 80, "duracion_min": 30 },
+  { "id": 2, "nombre": "Barba", "descripcion": "Arreglo y perfilado de barba con navaja y toalla caliente.", "precio": 40, "duracion_min": 25 },
+  { "id": 3, "nombre": "Cejas", "descripcion": "Perfilado y diseño de cejas para un look más definido.", "precio": 20, "duracion_min": 15 },
+  { "id": 4, "nombre": "Tintado de pelo", "descripcion": "Coloración profesional con productos de alta calidad.", "precio": 100, "duracion_min": 60 },
+  { "id": 5, "nombre": "Masaje de cara", "descripcion": "Masaje facial relajante y revitalizante para tu piel.", "precio": 110, "duracion_min": 40 },
+  { "id": 6, "nombre": "Exfoliación de cara", "descripcion": "Limpieza profunda y exfoliación para una piel renovada.", "precio": 70, "duracion_min": 35 }
+]

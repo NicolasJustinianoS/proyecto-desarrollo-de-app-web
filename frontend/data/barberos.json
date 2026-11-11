@@ -1,0 +1,5 @@
+[
+  { "id": 1, "nombre": "Joseff", "apellido": "Justiniano", "rol": "Barbero principal", "hora_entrada": "09:00", "hora_salida": "19:00", "dias_trabajo": [1, 2, 3, 4, 5, 6] },
+  { "id": 2, "nombre": "Alejandro", "apellido": "Tineo", "rol": "Barbero", "hora_entrada": "09:00", "hora_salida": "19:00", "dias_trabajo": [1, 2, 3, 4, 5, 6] },
+  { "id": 3, "nombre": "Walter", "apellido": "Chavez", "rol": "Barbero", "hora_entrada": "10:00", "hora_salida": "19:00", "dias_trabajo": [1, 2, 3, 4, 5, 6] }
+]

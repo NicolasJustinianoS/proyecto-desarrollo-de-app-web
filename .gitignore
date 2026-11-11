@@ -1,0 +1,12 @@
+# Sistema operativo
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor
+.vscode/
+
+# Secretos y dependencias (para cuando agreguemos el backend)
+.env
+vendor/
+node_modules/

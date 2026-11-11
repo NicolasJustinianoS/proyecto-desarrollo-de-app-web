@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservar cita | Joseff Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <nav class="menu contenedor">
+      <a href="index.html" class="logo">JOSEFF STUDIO <span>BY SEAF</span></a>
+      <ul class="menu-links">
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#productos">Productos</a></li>
+        <li><a href="index.html#barberos">Barberos</a></li>
+        <li><a href="login.html">Ingresar</a></li>
+        <li><a href="reservar.html" class="btn">Reservar</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contenedor reserva">
+    <p class="etiqueta">Agenda tu visita</p>
+    <h1>Reservar cita</h1>
+
+    <ol class="pasos" id="indicador-pasos">
+      <li class="activo">Servicios</li>
+      <li>Barbero</li>
+      <li>Fecha y hora</li>
+      <li>Confirmar</li>
+    </ol>
+
+    <section id="paso-1" class="paso">
+      <h2>Elige tus servicios</h2>
+      <p class="ayuda">Puedes elegir uno o más. El precio y el tiempo se suman automáticamente.</p>
+      <div id="lista-servicios-reserva" class="grilla"></div>
+    </section>
+
+    <section id="paso-2" class="paso oculto">
+      <h2>Elige tu barbero</h2>
+      <div id="lista-barberos-reserva" class="grilla"></div>
+    </section>
+
+    <section id="paso-3" class="paso oculto">
+      <h2>Elige fecha y hora</h2>
+      <h3 class="subtitulo">Fecha</h3>
+      <div id="lista-fechas" class="chips"></div>
+      <h3 class="subtitulo">Hora</h3>
+      <p id="ayuda-horas" class="ayuda">Primero elige una fecha.</p>
+      <div id="lista-horas" class="chips"></div>
+    </section>
+
+    <section id="paso-4" class="paso oculto">
+      <h2>Confirma tu reserva</h2>
+      <div id="resumen-final" class="resumen"></div>
+    </section>
+
+    <p id="mensaje-reserva" class="mensaje" role="alert"></p>
+
+    <div class="barra-reserva">
+      <div class="totales">
+        <span id="total-precio">Total: Bs 0</span>
+        <span id="total-minutos">0 min</span>
+      </div>
+      <div class="botones">
+        <button type="button" id="btn-atras" class="btn btn-secundario oculto">Atrás</button>
+        <button type="button" id="btn-siguiente" class="btn">Siguiente</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>Quinto anillo, entre Alemana y Banzer · Lun a Sáb, 9:00 a 19:00</p>
+      <p>WhatsApp +591 75033791 · Instagram @joseff_studio</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/reservar.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+[
+  { "id": 1, "nombre": "Shampoo de pepino", "descripcion": "Limpieza suave y frescura para el cabello.", "precio": 100 },
+  { "id": 2, "nombre": "Cera para pelo L3bel", "descripcion": "Fijación y acabado natural para tu peinado.", "precio": 150 },
+  { "id": 3, "nombre": "Talco texturizante", "descripcion": "Volumen y textura con acabado mate.", "precio": 100 }
+]

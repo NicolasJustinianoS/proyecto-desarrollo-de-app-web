@@ -1,0 +1,798 @@
+/* ---------- Variables: los colores y fuentes del proyecto ---------- */
+:root {
+  --negro: #0D0D0D;
+  --superficie: #1A1A1A;
+  --dorado: #D4AF37;
+  --hueso: #F5F1E8;
+  --gris: #9A9A9A;
+  --borde: rgba(212, 175, 55, 0.2);
+  --fuente-titulos: "Playfair Display", serif;
+  --fuente-texto: "Inter", sans-serif;
+}
+
+/* ---------- Reinicio básico ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--negro);
+  color: var(--hueso);
+  font-family: var(--fuente-texto);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Piezas reutilizables ---------- */
+.contenedor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.etiqueta {
+  color: var(--dorado);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--dorado);
+  color: var(--negro);
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+/* ---------- Menú ---------- */
+.encabezado {
+  position: sticky;
+  top: 0;
+  background: var(--negro);
+  border-bottom: 1px solid var(--borde);
+  z-index: 10;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.logo {
+  font-family: var(--fuente-titulos);
+  color: var(--dorado);
+  letter-spacing: 0.1em;
+}
+
+.logo span {
+  display: block;
+  font-family: var(--fuente-texto);
+  font-size: 0.65rem;
+  color: var(--gris);
+}
+
+.menu-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.menu-links a:hover {
+  color: var(--dorado);
+}
+
+.menu-links a.btn:hover {
+  color: var(--negro);
+}
+
+/* ---------- Secciones ---------- */
+.hero {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  max-width: 700px;
+  margin: 12px 0;
+}
+
+.hero-texto {
+  color: var(--gris);
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+
+.seccion {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-top: 1px solid var(--borde);
+}
+
+.seccion h2 {
+  font-size: 2rem;
+}
+
+/* ---------- Pie de página ---------- */
+.pie {
+  border-top: 1px solid var(--borde);
+  padding: 30px 0;
+  color: var(--gris);
+  font-size: 0.9rem;
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 700px) {
+  .menu {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .menu-links {
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+}
+
+/* ---------- Tarjetas ---------- */
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.tarjeta {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tarjeta h3 {
+  font-size: 1.2rem;
+}
+
+.tarjeta p {
+  color: var(--gris);
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+.tarjeta-pie {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--borde);
+  padding-top: 12px;
+}
+
+.precio {
+  color: var(--dorado);
+  font-family: var(--fuente-titulos);
+  font-size: 1.15rem;
+}
+
+.detalle {
+  color: var(--gris);
+  font-size: 0.85rem;
+}
+
+.tarjeta-barbero {
+  align-items: center;
+  text-align: center;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--dorado);
+  color: var(--dorado);
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Ingresar y crear cuenta ---------- */
+.oculto {
+  display: none !important;
+}
+
+.auth {
+  padding-top: 60px;
+  padding-bottom: 80px;
+}
+
+.auth-caja {
+  max-width: 440px;
+  margin: 0 auto;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 32px;
+}
+
+.auth-caja h1 {
+  font-size: 1.8rem;
+  margin: 6px 0 20px;
+}
+
+.pestanas {
+  display: flex;
+  border-bottom: 1px solid var(--borde);
+  margin-bottom: 22px;
+}
+
+.pestana {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--gris);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pestana.activa {
+  color: var(--dorado);
+  border-bottom-color: var(--dorado);
+}
+
+form label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--gris);
+  margin-bottom: 4px;
+}
+
+form input {
+  width: 100%;
+  background: var(--negro);
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  color: var(--hueso);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+form input:focus {
+  outline: none;
+  border-color: var(--dorado);
+}
+
+button.btn {
+  width: 100%;
+  border: none;
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mensaje {
+  min-height: 1.4em;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.mensaje.error {
+  color: #e57373;
+}
+
+.mensaje.ok {
+  color: #81c784;
+}
+
+/* ---------- Reservar ---------- */
+.reserva {
+  padding-top: 50px;
+  padding-bottom: 130px;
+}
+
+.reserva h1 {
+  font-size: 2.2rem;
+  margin: 6px 0 24px;
+}
+
+.pasos {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  counter-reset: paso;
+}
+
+.pasos li {
+  flex: 1;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--gris);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--borde);
+  counter-increment: paso;
+}
+
+.pasos li::before {
+  content: counter(paso) ". ";
+}
+
+.pasos li.activo {
+  color: var(--dorado);
+  border-bottom-color: var(--dorado);
+}
+
+.pasos li.hecho {
+  color: var(--hueso);
+  border-bottom-color: var(--hueso);
+}
+
+.paso h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.ayuda {
+  color: var(--gris);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.subtitulo {
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dorado);
+  margin: 24px 0 10px;
+}
+
+/* Tarjetas que se pueden elegir */
+.tarjeta.seleccionable {
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.tarjeta.seleccionable:hover {
+  border-color: var(--dorado);
+}
+
+.tarjeta.seleccionada {
+  border-color: var(--dorado);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+/* Fechas y horas (se usan en la parte 5B) */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  color: var(--hueso);
+  font-family: var(--fuente-texto);
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.chip:hover:not(:disabled) {
+  border-color: var(--dorado);
+}
+
+.chip.seleccionada {
+  background: var(--dorado);
+  border-color: var(--dorado);
+  color: var(--negro);
+  font-weight: 600;
+}
+
+.chip:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* Resumen final (se usa en la parte 5B) */
+.resumen {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 24px;
+}
+
+.resumen p {
+  margin-bottom: 8px;
+}
+
+.resumen .etiqueta {
+  margin-top: 16px;
+}
+
+/* Barra fija de abajo con totales y botones */
+.barra-reserva {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--superficie);
+  border-top: 1px solid var(--borde);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.totales {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+
+.totales span:first-child {
+  color: var(--dorado);
+  font-family: var(--fuente-titulos);
+  font-size: 1.2rem;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+}
+
+.barra-reserva button.btn {
+  width: auto;
+}
+
+button.btn.btn-secundario {
+  background: transparent;
+  color: var(--hueso);
+  border: 1px solid var(--borde);
+}
+
+/* ---------- Resumen y confirmación ---------- */
+.resumen ul {
+  margin: 0 0 8px 20px;
+}
+
+.exito {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.exito h2 {
+  font-size: 1.8rem;
+  color: var(--dorado);
+  margin-bottom: 12px;
+}
+
+.codigo {
+  font-family: var(--fuente-titulos);
+  font-size: 2.6rem;
+  color: var(--dorado);
+  letter-spacing: 0.1em;
+  margin: 8px 0 16px;
+}
+
+/* ---------- Panel de administración ---------- */
+.panel {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.panel-cabecera {
+  margin-bottom: 24px;
+}
+
+.panel-cabecera h1 {
+  font-size: 1.8rem;
+}
+
+button.btn.btn-chico {
+  width: auto;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.navegador-fecha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fecha-actual {
+  min-width: 190px;
+  text-align: center;
+  font-family: var(--fuente-titulos);
+  font-size: 1.1rem;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: auto;
+}
+
+select {
+  background: var(--negro);
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  color: var(--hueso);
+  font-family: var(--fuente-texto);
+  font-size: 0.9rem;
+  padding: 8px 10px;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--dorado);
+}
+
+.resumen-dia {
+  color: var(--gris);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.tabla-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla th {
+  text-align: left;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dorado);
+  padding: 12px;
+  border-bottom: 1px solid var(--borde);
+  white-space: nowrap;
+}
+
+.tabla td {
+  padding: 12px;
+  border-bottom: 1px solid var(--borde);
+  vertical-align: middle;
+}
+
+.tabla tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla .vacio {
+  text-align: center;
+  color: var(--gris);
+  padding: 30px;
+}
+
+.insignia {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  border: 1px solid var(--borde);
+  text-transform: capitalize;
+}
+
+select.estado {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+select.estado-pendiente { color: #ffd54f; }
+select.estado-confirmada { color: #81c784; }
+select.estado-completada { color: #9fa8da; }
+select.estado-cancelada { color: #e57373; }
+
+.acciones {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.enlace-accion {
+  background: none;
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  color: var(--hueso);
+  font-family: var(--fuente-texto);
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.enlace-accion:hover {
+  border-color: var(--dorado);
+  color: var(--dorado);
+}
+
+.enlace-accion.peligro:hover {
+  border-color: #e57373;
+  color: #e57373;
+}
+
+/* ---------- Catálogos del panel y diálogo ---------- */
+:root {
+  color-scheme: dark; /* selectores de hora y de fecha en modo oscuro */
+}
+
+.cabecera-seccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cabecera-seccion h2 {
+  font-size: 1.4rem;
+}
+
+.dialogo {
+  background: var(--superficie);
+  color: var(--hueso);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 28px;
+  width: min(480px, 92vw);
+  margin: auto;
+}
+
+.dialogo::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dialogo h2 {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+}
+
+form textarea {
+  width: 100%;
+  background: var(--negro);
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  color: var(--hueso);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+form textarea:focus {
+  outline: none;
+  border-color: var(--dorado);
+}
+
+.etiqueta-grupo {
+  font-size: 0.85rem;
+  color: var(--gris);
+  margin-bottom: 6px;
+}
+
+.dias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 16px;
+}
+
+form label.check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  color: var(--hueso);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+form .dias input {
+  width: auto;
+  margin: 0 6px 0 0;
+}
+
+.dialogo-botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dialogo-botones button.btn {
+  width: auto;
+}
+
+/* ---------- Agregar cita ---------- */
+form select {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.lista-check {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 170px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+form .lista-check input {
+  width: auto;
+  margin: 0 8px 0 0;
+}
+
+.fila-dos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.resumen-cita {
+  color: var(--dorado);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.dialogo {
+  max-height: 90vh;
+  overflow-y: auto;
+}

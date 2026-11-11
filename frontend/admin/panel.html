@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel | Joseff Studio</title>
+  <script>
+    // Si no hay "sesión", vuelve al login antes de mostrar nada
+    if (sessionStorage.getItem("adminDemo") !== "si") {
+      window.location.href = "login.html";
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <nav class="menu contenedor">
+      <a href="../index.html" class="logo">JOSEFF STUDIO <span>BY SEAF</span></a>
+      <ul class="menu-links">
+        <li><a href="../index.html">Ver sitio</a></li>
+        <li><button type="button" id="btn-salir" class="btn btn-secundario btn-chico">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="panel contenedor">
+    <div class="panel-cabecera">
+      <div>
+        <p class="etiqueta">Administración</p>
+        <h1>Panel de Joseff Studio</h1>
+      </div>
+    </div>
+
+    <div class="pestanas" id="pestanas-panel">
+      <button type="button" class="pestana activa" data-seccion="citas">Citas</button>
+      <button type="button" class="pestana" data-seccion="servicios">Servicios</button>
+      <button type="button" class="pestana" data-seccion="productos">Productos</button>
+      <button type="button" class="pestana" data-seccion="barberos">Barberos</button>
+    </div>
+
+    <!-- Sección: Citas -->
+    <section id="sec-citas">
+      <div class="controles">
+        <div class="navegador-fecha">
+          <button type="button" id="dia-anterior" class="btn btn-secundario btn-chico" aria-label="Día anterior">‹</button>
+          <span id="fecha-actual" class="fecha-actual"></span>
+          <button type="button" id="dia-siguiente" class="btn btn-secundario btn-chico" aria-label="Día siguiente">›</button>
+          <button type="button" id="dia-hoy" class="btn btn-secundario btn-chico">Hoy</button>
+        </div>
+        <div class="filtros">
+          <select id="filtro-estado" aria-label="Filtrar por estado">
+            <option value="todos">Todos los estados</option>
+            <option value="pendiente">Pendiente</option>
+            <option value="confirmada">Confirmada</option>
+            <option value="completada">Completada</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+          <select id="filtro-origen" aria-label="Filtrar por origen">
+            <option value="todos">Todos los orígenes</option>
+            <option value="app">App</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="presencial">Presencial</option>
+          </select>
+        </div>
+        <button type="button" id="btn-nueva-cita" class="btn btn-chico">Agregar cita</button>
+      </div>
+
+      <p id="resumen-dia" class="resumen-dia"></p>
+
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Cliente</th>
+              <th>Servicios</th>
+              <th>Barbero</th>
+              <th>Origen</th>
+              <th>Estado</th>
+              <th>Total</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-citas"></tbody>
+        </table>
+      </div>
+    </section>
+
+     <!-- Sección: Servicios -->
+    <section id="sec-servicios" class="oculto">
+      <div class="cabecera-seccion">
+        <h2>Servicios</h2>
+        <button type="button" class="btn btn-chico" data-nuevo="servicios">Agregar servicio</button>
+      </div>
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <thead>
+            <tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Duración</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="tabla-servicios"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Sección: Productos -->
+    <section id="sec-productos" class="oculto">
+      <div class="cabecera-seccion">
+        <h2>Productos</h2>
+        <button type="button" class="btn btn-chico" data-nuevo="productos">Agregar producto</button>
+      </div>
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <thead>
+            <tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="tabla-productos"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Sección: Barberos -->
+    <section id="sec-barberos" class="oculto">
+      <div class="cabecera-seccion">
+        <h2>Barberos</h2>
+        <button type="button" class="btn btn-chico" data-nuevo="barberos">Agregar barbero</button>
+      </div>
+      <div class="tabla-scroll">
+        <table class="tabla">
+          <thead>
+            <tr><th>Barbero</th><th>Rol</th><th>Horario</th><th>Días</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="tabla-barberos"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+    <dialog id="dialogo" class="dialogo">
+    <form id="form-catalogo" novalidate>
+      <h2 id="dialogo-titulo"></h2>
+      <div id="dialogo-campos"></div>
+      <p id="mensaje-dialogo" class="mensaje" role="alert"></p>
+      <div class="dialogo-botones">
+        <button type="button" id="dialogo-cancelar" class="btn btn-secundario">Cancelar</button>
+        <button type="submit" class="btn">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+    <dialog id="dialogo-cita" class="dialogo">
+    <form id="form-cita" novalidate>
+      <h2>Agregar cita</h2>
+
+      <label for="cita-origen">¿Cómo llegó la cita?</label>
+      <select id="cita-origen">
+        <option value="whatsapp">WhatsApp</option>
+        <option value="presencial">Presencial (sin cita previa)</option>
+      </select>
+
+      <label for="cita-nombre">Nombre del cliente</label>
+      <input type="text" id="cita-nombre" autocomplete="off">
+
+      <label for="cita-telefono">Teléfono (8 dígitos; obligatorio en WhatsApp)</label>
+      <input type="tel" id="cita-telefono" autocomplete="off">
+
+      <p class="etiqueta-grupo">Servicios</p>
+      <div id="cita-servicios" class="lista-check"></div>
+
+      <label for="cita-barbero">Barbero</label>
+      <select id="cita-barbero"></select>
+
+      <div class="fila-dos">
+        <div>
+          <label for="cita-fecha">Fecha</label>
+          <input type="date" id="cita-fecha">
+        </div>
+        <div>
+          <label for="cita-hora">Hora de inicio</label>
+          <input type="time" id="cita-hora">
+        </div>
+      </div>
+
+      <label for="cita-estado">Estado</label>
+      <select id="cita-estado">
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="completada">Completada</option>
+        <option value="cancelada">Cancelada</option>
+      </select>
+
+      <p id="resumen-cita" class="resumen-cita"></p>
+      <p id="mensaje-cita" class="mensaje" role="alert"></p>
+      <div class="dialogo-botones">
+        <button type="button" id="cita-cancelar" class="btn btn-secundario">Cancelar</button>
+        <button type="submit" class="btn">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/admin.js"></script>
+  <script src="../js/admin-catalogo.js"></script>
+  <script src="../js/admin-citas.js"></script>
+
+</body>
+</html>
