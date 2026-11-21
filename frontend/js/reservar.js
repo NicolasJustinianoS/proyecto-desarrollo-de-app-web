@@ -329,7 +329,7 @@ document.getElementById("btn-siguiente").addEventListener("click", siguiente);
 document.getElementById("btn-atras").addEventListener("click", atras);
 
 // ----- Carga inicial de datos -----
-obtenerDatos("data/servicios.json")
+obtenerDatos(API_URL + "/servicios")
   .then(datos => {
     catalogoServicios = datos;
     dibujarServicios();
@@ -339,7 +339,7 @@ obtenerDatos("data/servicios.json")
     mostrarMensaje("No se pudieron cargar los servicios.", "error");
   });
 
-obtenerDatos("data/barberos.json")
+obtenerDatos(API_URL + "/barberos")
   .then(datos => {
     catalogoBarberos = datos;
     dibujarBarberos();

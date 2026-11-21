@@ -1,3 +1,5 @@
+// Dirección de la API. Cuando publiquemos, solo cambiará esta línea.
+const API_URL = "http://127.0.0.1:8000/api";
 // Todas las peticiones al servidor pasan por esta función.
 // Cuando exista la API de Laravel, solo cambiaremos las rutas que le pasamos.
 function obtenerDatos(ruta) {

@@ -59,6 +59,6 @@ function cargarLista(ruta, idContenedor, mostrar) {
     });
 }
 
-cargarLista("data/servicios.json", "lista-servicios", mostrarServicios);
-cargarLista("data/productos.json", "lista-productos", mostrarProductos);
-cargarLista("data/barberos.json", "lista-barberos", mostrarBarberos);
+cargarLista(API_URL + "/servicios", "lista-servicios", mostrarServicios);
+cargarLista(API_URL + "/productos", "lista-productos", mostrarProductos);
+cargarLista(API_URL + "/barberos", "lista-barberos", mostrarBarberos);
