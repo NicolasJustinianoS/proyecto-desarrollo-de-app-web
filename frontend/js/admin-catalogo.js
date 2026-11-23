@@ -206,20 +206,28 @@ formCatalogo.addEventListener("submit", function (event) {
   }
 
   const lista = obtenerLista(tipoActual);
-  if (elementoEditando === null) {
-    // Simula el autoincremental de la base de datos: el id más alto + 1
-    nuevo.id = lista.reduce((mayor, e) => Math.max(mayor, e.id), 0) + 1;
-    lista.push(nuevo);
-  } else {
-    // Cambia el objeto existente en su lugar
-    Object.assign(elementoEditando, nuevo);
-  }
+  const tipo = tipoActual;
+  const editando = elementoEditando;
+  const ruta = API_URL + "/admin/" + tipo + (editando === null ? "" : "/" + editando.id);
 
-  dibujarCatalogo(tipoActual);
-  if (tipoActual === "barberos") {
-    dibujarCitas(); // la tabla de citas muestra el nombre del barbero
-  }
-  dialogo.close();
+  peticion(ruta, editando === null ? "POST" : "PUT", nuevo)
+    .then(guardado => {
+      if (editando === null) {
+        lista.push(guardado);
+      } else {
+        Object.assign(editando, guardado);
+      }
+      dibujarCatalogo(tipo);
+      if (tipo === "barberos") {
+        dibujarCitas(); // la tabla de citas muestra el nombre del barbero
+      }
+      dialogo.close();
+    })
+    .catch(error => {
+      if (!manejarSesion(error)) {
+        mostrarErrorDialogo(textoError(error));
+      }
+    });
 });
 
 document.getElementById("dialogo-cancelar").addEventListener("click", function () {
@@ -232,19 +240,28 @@ document.querySelectorAll("[data-nuevo]").forEach(boton => {
   });
 });
 
-// ----- Eliminar -----
+// ----- Desactivar -----
+// No se borra de verdad: el servidor lo marca como inactivo para conservar el historial de citas.
 function eliminarElemento(tipo, id) {
   const lista = obtenerLista(tipo);
   const indice = lista.findIndex(e => e.id === id);
   const elemento = lista[indice];
 
-  if (!confirm("¿Eliminar «" + elemento.nombre + "»? No se puede deshacer.")) {
+  if (!confirm("¿Quitar «" + elemento.nombre + "»? Dejará de mostrarse en el sitio, pero se conserva el historial.")) {
     return;
   }
 
-  lista.splice(indice, 1);
-  dibujarCatalogo(tipo);
-  if (tipo === "barberos") {
-    dibujarCitas();
-  }
+  peticion(API_URL + "/admin/" + tipo + "/" + id, "DELETE")
+    .then(() => {
+      lista.splice(indice, 1);
+      dibujarCatalogo(tipo);
+      if (tipo === "barberos") {
+        dibujarCitas();
+      }
+    })
+    .catch(error => {
+      if (!manejarSesion(error)) {
+        alert(textoError(error));
+      }
+    });
 }

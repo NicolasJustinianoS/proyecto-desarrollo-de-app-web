@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel | Joseff Studio</title>
   <script>
-    // Si no hay "sesión", vuelve al login antes de mostrar nada
-    if (sessionStorage.getItem("adminDemo") !== "si") {
+    // Si no hay sesión de administrador, vuelve al login antes de mostrar nada.
+    // (La protección real está en el servidor: sin token de admin, la API responde 401/403.)
+    let usuarioGuardado = null;
+    try { usuarioGuardado = JSON.parse(sessionStorage.getItem("jsf_usuario")); } catch (e) {}
+    if (sessionStorage.getItem("jsf_token") === null || !usuarioGuardado || usuarioGuardado.rol !== "admin") {
       window.location.href = "login.html";
     }
   </script>

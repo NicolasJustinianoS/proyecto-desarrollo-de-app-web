@@ -29,9 +29,19 @@ formAdmin.addEventListener("submit", function (event) {
     return;
   }
 
-  // SOLO PARA EL PROTOTIPO: aquí no se verifica nada de verdad.
-  // Con Laravel, el servidor comprobará el correo y la contraseña
-  // y devolverá un token si son correctos.
-  sessionStorage.setItem("adminDemo", "si");
-  window.location.href = "panel.html";
+  // El servidor comprueba el correo y la contraseña y devuelve un token si son correctos
+  peticion(API_URL + "/login", "POST", { email: correo, password: password })
+    .then(datos => {
+      if (datos.user.rol !== "admin") {
+        // Es un cliente: no entra al panel. Se cierra la sesión que se acaba de abrir.
+        guardarSesion(datos.token, datos.user);
+        return peticion(API_URL + "/logout", "POST").finally(() => {
+          limpiarSesion();
+          mostrarError("Esta cuenta no tiene permiso de administrador.");
+        });
+      }
+      guardarSesion(datos.token, datos.user);
+      window.location.href = "panel.html";
+    })
+    .catch(error => mostrarError(textoError(error)));
 });

@@ -1,3 +1,8 @@
+// Para reservar hace falta una cuenta: si no hay sesión, se envía al login
+if (!haySesion()) {
+  window.location.href = "login.html";
+}
+
 // ----- Estado de la reserva: lo que el cliente va eligiendo -----
 const reserva = {
   servicios: [],   // servicios elegidos (objetos completos)
@@ -50,8 +55,8 @@ function dibujarServicios() {
     contenedor.innerHTML += `
       <article class="tarjeta seleccionable ${elegido ? "seleccionada" : ""}"
                onclick="alternarServicio(${servicio.id})">
-        <h3>${servicio.nombre}</h3>
-        <p>${servicio.descripcion}</p>
+        <h3>${escapar(servicio.nombre)}</h3>
+        <p>${escapar(servicio.descripcion)}</p>
         <div class="tarjeta-pie">
           <span class="precio">Bs ${servicio.precio}</span>
           <span class="detalle">${servicio.duracion_min} min</span>
@@ -80,13 +85,13 @@ function dibujarBarberos() {
   contenedor.innerHTML = "";
   catalogoBarberos.forEach(barbero => {
     const elegido = reserva.barbero !== null && reserva.barbero.id === barbero.id;
-    const iniciales = barbero.nombre.charAt(0) + barbero.apellido.charAt(0);
+    const iniciales = escapar(barbero.nombre.charAt(0) + barbero.apellido.charAt(0));
     contenedor.innerHTML += `
       <article class="tarjeta tarjeta-barbero seleccionable ${elegido ? "seleccionada" : ""}"
                onclick="elegirBarbero(${barbero.id})">
         <div class="avatar">${iniciales}</div>
-        <h3>${barbero.nombre} ${barbero.apellido}</h3>
-        <p>${barbero.rol}</p>
+        <h3>${escapar(barbero.nombre)} ${escapar(barbero.apellido)}</h3>
+        <p>${escapar(barbero.rol)}</p>
       </article>`;
   });
 }
@@ -219,35 +224,27 @@ function dibujarResumen() {
   const fin = aHora(aMinutos(reserva.hora) + totalMinutos());
   // map transforma cada servicio en un texto; join los une en uno solo
   const lista = reserva.servicios
-    .map(s => `<li>${s.nombre} — Bs ${s.precio} (${s.duracion_min} min)</li>`)
+    .map(s => `<li>${escapar(s.nombre)} — Bs ${s.precio} (${s.duracion_min} min)</li>`)
     .join("");
 
   document.getElementById("resumen-final").innerHTML = `
     <p class="etiqueta">Servicios</p>
     <ul>${lista}</ul>
     <p class="etiqueta">Barbero</p>
-    <p>${reserva.barbero.nombre} ${reserva.barbero.apellido}</p>
+    <p>${escapar(reserva.barbero.nombre)} ${escapar(reserva.barbero.apellido)}</p>
     <p class="etiqueta">Fecha y hora</p>
     <p>${fechaLarga(reserva.fecha)}, de ${reserva.hora} a ${fin}</p>
     <p class="etiqueta">Total</p>
     <p class="precio">Bs ${totalPrecio()} · ${totalMinutos()} min</p>`;
 }
 
-function generarCodigo() {
-  return "JSF-" + Math.floor(1000 + Math.random() * 9000);
-}
-
-function confirmarReserva() {
-  // AHORA: solo simula. DESPUÉS: aquí irá el fetch POST /api/citas a Laravel,
-  // y el código lo generará el servidor.
-  const codigo = generarCodigo();
-
+function mostrarExito(codigo) {
   document.getElementById("paso-4").innerHTML = `
     <div class="exito">
       <h2>¡Reserva confirmada!</h2>
       <p>Tu código de reserva es</p>
-      <p class="codigo">${codigo}</p>
-      <p class="ayuda">Guárdalo. Esto es una simulación: todavía no se envía a ningún servidor.</p>
+      <p class="codigo">${escapar(codigo)}</p>
+      <p class="ayuda">Guárdalo y preséntalo en la barbería.</p>
       <a href="index.html" class="btn">Volver al inicio</a>
     </div>`;
 
@@ -257,6 +254,45 @@ function confirmarReserva() {
     li.classList.add("hecho");
   });
   mostrarMensaje("", "");
+}
+
+let enviandoReserva = false;
+
+function confirmarReserva() {
+  if (enviandoReserva) {
+    return;
+  }
+  enviandoReserva = true;
+  const boton = document.getElementById("btn-siguiente");
+  boton.disabled = true;
+  mostrarMensaje("Guardando tu reserva...", "ok");
+
+  // Solo se envían las ELECCIONES. El servidor recalcula duración, total y disponibilidad.
+  peticion(API_URL + "/citas", "POST", {
+    barbero_id: reserva.barbero.id,
+    fecha: reserva.fecha,
+    hora_inicio: reserva.hora,
+    servicios: reserva.servicios.map(s => s.id)
+  })
+    .then(cita => mostrarExito(cita.codigo))
+    .catch(error => {
+      if (error.estado === 401) {
+        limpiarSesion();
+        window.location.href = "login.html";
+        return;
+      }
+      mostrarMensaje(textoError(error), "error");
+      if (error.estado === 422) {
+        // Probablemente alguien tomó ese horario: se vuelve al paso 3 para elegir otro
+        reserva.hora = null;
+        mostrarPaso(3);
+        mostrarMensaje(textoError(error), "error");
+      }
+    })
+    .finally(() => {
+      enviandoReserva = false;
+      boton.disabled = false;
+    });
 }
 
 // ----- Navegación entre pasos -----

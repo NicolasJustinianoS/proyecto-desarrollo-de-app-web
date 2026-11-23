@@ -99,30 +99,9 @@ function validarCita(d) {
       " a " + d.barbero.hora_salida + "). Esta cita terminaría a las " + aHora(fin) + ".";
   }
 
-  // ¿Choca con otra cita? Misma regla que en la reserva de clientes.
-  const offset = diasDesdeHoy(d.fecha);
-  const choque = citas.find(c =>
-    c.barbero_id === d.barbero.id &&
-    c.dia_offset === offset &&
-    c.estado !== "cancelada" &&
-    inicio < aMinutos(c.hora_fin) &&
-    fin > aMinutos(c.hora_inicio)
-  );
-  if (choque) {
-    return d.barbero.nombre + " ya tiene una cita de " + choque.hora_inicio + " a " + choque.hora_fin + ".";
-  }
+  // El choque de horarios y el recálculo de duración y total los valida el SERVIDOR.
 
   return "";
-}
-
-// Con solo 9.000 códigos posibles se pueden repetir: por eso se comprueba.
-// En la base de datos real, el campo "codigo" será único.
-function codigoNuevo() {
-  let codigo;
-  do {
-    codigo = "JSF-" + Math.floor(1000 + Math.random() * 9000);
-  } while (citas.some(c => c.codigo === codigo));
-  return codigo;
 }
 
 formCita.addEventListener("submit", function (event) {
@@ -144,27 +123,27 @@ formCita.addEventListener("submit", function (event) {
     return;
   }
 
-  const minutos = datos.elegidos.reduce((suma, s) => suma + s.duracion_min, 0);
-  const offset = diasDesdeHoy(datos.fecha);
-
-  citas.push({
-    id: citas.reduce((mayor, c) => Math.max(mayor, c.id), 0) + 1,
-    codigo: codigoNuevo(),
-    cliente_nombre: datos.nombre === "" ? "Sin registro" : datos.nombre,
-    cliente_telefono: datos.telefono,
-    barbero_id: datos.barbero.id,
-    dia_offset: offset,
-    hora_inicio: datos.hora,
-    hora_fin: aHora(aMinutos(datos.hora) + minutos),
-    servicios: datos.elegidos.map(s => s.nombre),
-    estado: document.getElementById("cita-estado").value,
+  // El navegador manda solo las elecciones; el servidor calcula el resto y genera el código
+  peticion(API_URL + "/admin/citas", "POST", {
     origen: datos.origen,
-    total: datos.elegidos.reduce((suma, s) => suma + s.precio, 0)
-  });
-
-  diaOffset = offset; // la tabla salta al día de la cita nueva
-  dibujarCitas();
-  dialogoCita.close();
+    estado: document.getElementById("cita-estado").value,
+    cliente_nombre: datos.nombre === "" ? null : datos.nombre,
+    cliente_telefono: datos.telefono === "" ? null : datos.telefono,
+    barbero_id: datos.barbero.id,
+    fecha: datos.fecha,
+    hora_inicio: datos.hora,
+    servicios: datos.elegidos.map(s => s.id)
+  })
+    .then(() => {
+      diaOffset = diasDesdeHoy(datos.fecha); // la tabla salta al día de la cita nueva
+      cargarCitas();
+      dialogoCita.close();
+    })
+    .catch(err => {
+      if (!manejarSesion(err)) {
+        mostrarErrorCita(textoError(err));
+      }
+    });
 });
 
 formCita.addEventListener("change", actualizarResumenCita);

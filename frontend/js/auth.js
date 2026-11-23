@@ -26,6 +26,15 @@ function mostrarMensaje(elemento, texto, tipo) {
   elemento.className = "mensaje " + tipo; // tipo: "error" u "ok"
 }
 
+// Después de ingresar: los administradores van al panel; los clientes vuelven a donde estaban
+function irDespuesDeIngresar(usuario) {
+  if (usuario.rol === "admin") {
+    window.location.href = "admin/panel.html";
+  } else {
+    window.location.href = "reservar.html";
+  }
+}
+
 function correoValido(correo) {
   // Texto + @ + texto + . + texto, sin espacios
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
@@ -48,7 +57,13 @@ formLogin.addEventListener("submit", function (event) {
     return;
   }
 
-  mostrarMensaje(mensaje, "Datos válidos. Falta conectar con el servidor.", "ok");
+  mostrarMensaje(mensaje, "Ingresando...", "ok");
+  peticion(API_URL + "/login", "POST", { email: correo, password: password })
+    .then(datos => {
+      guardarSesion(datos.token, datos.user);
+      irDespuesDeIngresar(datos.user);
+    })
+    .catch(error => mostrarMensaje(mensaje, textoError(error), "error"));
 });
 
 // ----- Validación del registro -----
@@ -84,5 +99,18 @@ formRegistro.addEventListener("submit", function (event) {
     return;
   }
 
-  mostrarMensaje(mensaje, "Datos válidos. Falta conectar con el servidor.", "ok");
+  mostrarMensaje(mensaje, "Creando tu cuenta...", "ok");
+  peticion(API_URL + "/registro", "POST", {
+    nombre: nombre,
+    apellido: apellido,
+    email: correo,
+    telefono: telefono,
+    password: password,
+    password_confirmation: password2
+  })
+    .then(datos => {
+      guardarSesion(datos.token, datos.user);
+      irDespuesDeIngresar(datos.user);
+    })
+    .catch(error => mostrarMensaje(mensaje, textoError(error), "error"));
 });

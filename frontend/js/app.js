@@ -6,8 +6,8 @@ function mostrarServicios(servicios) {
   servicios.forEach(servicio => {
     contenedor.innerHTML += `
       <article class="tarjeta">
-        <h3>${servicio.nombre}</h3>
-        <p>${servicio.descripcion}</p>
+        <h3>${escapar(servicio.nombre)}</h3>
+        <p>${escapar(servicio.descripcion)}</p>
         <div class="tarjeta-pie">
           <span class="precio">Bs ${servicio.precio}</span>
           <span class="detalle">${servicio.duracion_min} min</span>
@@ -22,8 +22,8 @@ function mostrarProductos(productos) {
   productos.forEach(producto => {
     contenedor.innerHTML += `
       <article class="tarjeta">
-        <h3>${producto.nombre}</h3>
-        <p>${producto.descripcion}</p>
+        <h3>${escapar(producto.nombre)}</h3>
+        <p>${escapar(producto.descripcion)}</p>
         <div class="tarjeta-pie">
           <span class="precio">Bs ${producto.precio}</span>
         </div>
@@ -38,9 +38,9 @@ function mostrarBarberos(barberos) {
     const iniciales = barbero.nombre.charAt(0) + barbero.apellido.charAt(0);
     contenedor.innerHTML += `
       <article class="tarjeta tarjeta-barbero">
-        <div class="avatar">${iniciales}</div>
-        <h3>${barbero.nombre} ${barbero.apellido}</h3>
-        <p>${barbero.rol}</p>
+        <div class="avatar">${escapar(iniciales)}</div>
+        <h3>${escapar(barbero.nombre)} ${escapar(barbero.apellido)}</h3>
+        <p>${escapar(barbero.rol)}</p>
       </article>`;
   });
 }
