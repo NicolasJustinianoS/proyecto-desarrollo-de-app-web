@@ -33,19 +33,68 @@ El sistema se encuentra desplegado y disponible en:
 
 ## Estructura del proyecto
 
+El proyecto está organizado en dos componentes principales: `backend`, que contiene la API REST y la lógica del negocio desarrollada con Laravel, y `frontend`, que contiene las interfaces web para clientes y administradores.
+
 ```text
 proyecto-desarrollo-de-app-web/
 │
-├── backend/
-│   └── Aplicación Laravel y API REST
+├── backend/                         # Aplicación Laravel 12
+│   │
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/
+│   │   │   │   ├── Api/
+│   │   │   │   │   └── Admin/        # Controladores administrativos
+│   │   │   ├── Middleware/           # Control de acceso y roles
+│   │   │   └── Resources/            # Respuestas estructuradas en JSON
+│   │   │
+│   │   ├── Models/                   # Modelos Eloquent
+│   │   ├── Providers/                # Proveedores de servicios
+│   │   └── Services/                 # Lógica del negocio (CitaService)
+│   │
+│   ├── bootstrap/                    # Inicialización de Laravel
+│   ├── config/                       # Configuración de la aplicación
+│   │
+│   ├── database/
+│   │   ├── factories/                # Fábricas de datos
+│   │   ├── migrations/               # Estructura de las tablas
+│   │   └── seeders/                  # Datos iniciales
+│   │
+│   ├── public/                       # Punto de entrada de Laravel
+│   ├── resources/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── views/
+│   │
+│   ├── routes/                       # Definición de rutas de la API
+│   ├── storage/                      # Archivos, caché y registros
+│   ├── tests/
+│   │   ├── Feature/                  # Pruebas funcionales
+│   │   └── Unit/                     # Pruebas unitarias
+│   │
+│   ├── .env.example                  # Plantilla de variables de entorno
+│   ├── artisan                       # Consola de Laravel
+│   └── composer.json                 # Dependencias PHP
 │
-├── frontend/
-│   └── Interfaz web de Joseff Studio
+├── frontend/                         # Aplicación web
+│   ├── admin/                        # Panel de administración
+│   ├── css/                          # Estilos visuales
+│   └── js/                           # Lógica e interacción con la API
 │
 ├── .gitattributes
 ├── .gitignore
 └── README.md
 ```
+
+### Descripción de los componentes
+
+**Backend:** desarrollado con Laravel 12. Gestiona la autenticación, las reservas, las validaciones, las reglas del negocio y el acceso a MySQL mediante Eloquent ORM.
+
+**Frontend:** desarrollado con HTML, CSS y JavaScript. Contiene el sitio público para clientes y el panel privado de administración. Se comunica con el backend mediante peticiones HTTP utilizando `fetch()`.
+
+**Base de datos:** las migraciones de Laravel se encuentran en `backend/database/migrations` y definen la estructura de las tablas del sistema.
+
+**Seguridad:** Laravel Sanctum gestiona la autenticación mediante tokens y el middleware administrativo protege las operaciones restringidas.
 
 ## Funcionalidades principales
 
