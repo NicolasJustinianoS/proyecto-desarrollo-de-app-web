@@ -8,8 +8,15 @@ Proyecto final de la materia **Desarrollo de Aplicaciones Web** de la carrera de
 
 - **Nombre:** Joseff Studio
 - **Autor:** Nicolas Justiniano Saavedra
+- **Institución:** UTEPSA
+
+## Acceso al sistema
+
+El sistema se encuentra desplegado y disponible en:
+
 - **Sitio web:** https://joseffstudio.site.je
-- **Repositorio:** https://github.com/NicolasJustinianoS/proyecto-desarrollo-de-app-web
+- **Panel de administración:** https://joseffstudio.site.je/admin/login.html
+- **Repositorio GitHub:** https://github.com/NicolasJustinianoS/proyecto-desarrollo-de-app-web
 
 ## Tecnologías utilizadas
 
@@ -50,15 +57,3 @@ proyecto-desarrollo-de-app-web/
 - Administración de citas y cambio de estados.
 - Registro de citas presenciales y por WhatsApp.
 - Gestión de servicios, productos y barberos.
-
-## Sitio publicado
-
-El sistema se encuentra desplegado y disponible en:
-
-https://joseffstudio.site.je
-
-## Autor
-
-**Nicolas Justiniano Saavedra**
-
-Ingeniería de Sistemas — UTEPSA.
